@@ -1,0 +1,46 @@
+<div class="container">
+    <button class="btn btn-primary" (click) = "onNavigateBack()">Back</button>
+    <h1 class="title">
+      Migration Utility - Compare List
+    </h1>
+    <div class="row">
+     <div class="col-md-12">
+        <div *ngIf="showErrorMessage === ''" class="table-responsive">
+            <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <th scope="row">File name + path:</th>
+                      <td>{{fileSource}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Path for folder NGX:</th>
+                      <td>{{ngxPath}}</td>
+                    </tr>
+                    <!--tr>
+                      <th scope="row">Rules retrived from:</th>
+                      <td>{{rulePath}}</td>
+                    </tr-->
+                    <tr>
+                      <th scope="row">Key expected:</th>
+                      <td>{{keyUsedFromSource}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Matched File:</th>
+                      <td><a href="javascript:void()" (click)="onOpenCompare()">{{matchedRules}}</a></td>
+                    </tr>
+                </tbody>
+              </table>
+        </div>
+     </div>
+    </div>
+    <div class="alert alert-danger" *ngIf="showErrorMessage !== ''">
+      {{showErrorMessage}}
+    </div>
+    <!--compare-list-item></compare-list-item-->
+</div>

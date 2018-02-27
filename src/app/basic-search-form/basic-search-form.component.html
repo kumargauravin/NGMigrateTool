@@ -1,0 +1,28 @@
+<div>
+  <form (ngSubmit)="onSubmit()" #basicSearch="ngForm">
+    <div class="form-group">
+      <div class="input-group input-group-lg">
+        <input type="radio" value="T" name="searchType" [(ngModel)]="model.searchType" required #searchType="ngModel"> Path as Text
+        <input type="radio" value="B" name="searchType" [(ngModel)]="model.searchType" required #searchType="ngModel"> Browse File Path
+        <div *ngIf="model.searchType=='T'">
+          <label for="sourceName">Source File Name to Compare</label>
+          <input type="text" class="form-control input-lg"
+            placeholder="Enter File Path + Name..."
+            id="sourceName" name="sourceName"
+            [(ngModel)]="model.sourceName" required #sourceName="ngModel"/>
+          <div [hidden]="sourceName.valid || sourceName.pristine" class="alert alert-danger">
+              Please provide a valid path with file name. This field is required.
+          </div>
+        </div>
+        <div *ngIf="model.searchType=='B'">
+          <label for="sourceBrowse">Browse Source File</label>
+          <input type="file" class="form-control input-lg" id="browsedFile" name="browsedFile" [(ngModel)]="model.browsedFile" (change)="handleFileInput($event.target.files)" requireFile #browsedFile="ngModel">
+          <div [hidden]="browsedFile.valid || browsedFile.pristine" class="alert alert-danger">
+              Please select a valid file. This field is required!
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="!basicSearch.form.valid">Get Comparables</button>
+  </form>
+</div>

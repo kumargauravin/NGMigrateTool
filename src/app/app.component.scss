@@ -1,0 +1,16 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #f7f7f0;
+
+  .title {
+    color: black;
+    margin:0;
+    padding:50px 20px;
+  }
+
+}
