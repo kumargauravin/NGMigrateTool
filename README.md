@@ -11,7 +11,7 @@
 
 # Introduction
 
-Bootstrap and package your project with Angular 5(+) and Electron (Typescript + SASS + Hot Reload) for creating Desktop applications.
+Migration Utility works with beyond compare utility to open comparision of two files from a map.
 
 Currently runs with:
 
@@ -31,7 +31,7 @@ With this sample, you can :
 Clone this repository locally :
 
 ``` bash
-git clone https://github.com/maximegris/angular-electron.git
+git clone https://github.com/kumargauravin/NGMigrateTool
 ```
 
 Install dependencies with npm :
@@ -110,7 +110,8 @@ You can run tests with the command lines below :
 
 [<img alt="Maxime GRIS" src="https://avatars2.githubusercontent.com/u/10827551?v=3&s=117" width="117">](https://github.com/maximegris) |
 :---:
-|[Maxime GRIS](https://github.com/maximegris)|
+|[Maxime GRIS](https://github.com/maximegris)| 
+|[Kumar Gaurav](https://github.com/kumargauravin)|
 
 [build-badge]: https://travis-ci.org/maximegris/angular-electron.svg?branch=master
 [build]: https://travis-ci.org/maximegris/angular-electron.svg?branch=master
