@@ -3,6 +3,7 @@ export class BasicSearch {
     public sourceName: string,
     public sourceBrowse: string,
     public searchType: string,
-    public browsedFile: FileList
+    public browsedFile: FileList,
+    public sourceGit: string
   ) {  }
 }

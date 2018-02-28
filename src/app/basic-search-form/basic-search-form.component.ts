@@ -10,22 +10,26 @@ const fs = require('fs');
   styleUrls: ['./basic-search-form.component.scss']
 })
 export class BasicSearchFormComponent implements OnInit {
-  model = new BasicSearch('', '', 'T', null);
+  model = new BasicSearch('', '', 'G', null, '');
   submitted = false;
-
+  ngPath = '';
   onSubmit() {
     this.submitted = true;
     console.log(this.diagnostic);
-    let fileName = this.model.sourceName;
+    let fileName = this.model.sourceGit;
     if (this.model.searchType === 'B') {
       fileName = this.model.sourceBrowse;
     }
 
     const self = this;
-    fs.stat(fileName, function (err, stats) {
+    let fileToSearch = this.ngPath + '/' + this.model.sourceGit;
+    if (this.model.searchType === 'B') {
+      fileToSearch = this.model.sourceBrowse;
+    }
+
+    fs.stat(fileToSearch, function (err, stats) {
       if (stats && stats.isFile()) {
-        const backupModel = new BasicSearch(fileName , '', 'T', null);
-        self.dataService.changeModelScreen1(backupModel);
+        self.dataService.changeModelScreen1(self.model);
         self.dataService.changeFileSource(fileName);
         self.routerhome.navigate(['compareList']);
       } else {
@@ -47,6 +51,9 @@ export class BasicSearchFormComponent implements OnInit {
   constructor(private dataService: DataService, private routerhome: Router ) {
     this.dataService.currentModelScreen1.subscribe(modelScreen1BasicSearch => {
       this.model = modelScreen1BasicSearch;
+    });
+    this.dataService.currentNgPath.subscribe(ngPathBasicSearch => {
+      this.ngPath = ngPathBasicSearch;
     });
   }
 

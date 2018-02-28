@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { Router } from '@angular/router';
+import { BasicSearch } from '../../basic-search';
 const {dialog} = require('electron').remote;
 const {app} = require('electron').remote;
 const config = require('electron-json-config');
 const fs = require('fs');
 const child = require('child_process').execFile;
-const executablePath = 'C:\\Program Files\\Beyond Compare 4\\bcompare.exe';
 
 @Component({
   selector: 'app-compare-list',
@@ -18,9 +18,15 @@ export class CompareListComponent implements OnInit {
   compareRules = {};
   rulePath = '';
   ngxPath = '';
-  matchedRules = [];
+  ngPath = '';
+  matchedRules = '';
   showErrorMessage = '';
   keyUsedFromSource = '';
+  executablePath = '';
+  destinationFileNotExists = false;
+  noDestinationFound = false;
+  matchFound = false;
+  modelScreen1 = new BasicSearch('', '', '', null, '');
   constructor(private dataService: DataService, private routerCompareList: Router) { }
 
   ngOnInit() {
@@ -34,76 +40,73 @@ export class CompareListComponent implements OnInit {
     this.dataService.currentNgxPath.subscribe(ngxPathCompareList => {
       this.ngxPath = ngxPathCompareList;
     });
-    let execStep2 = false;
-    if (this.ngxPath === '') {
-      const ngxSelection = dialog.showOpenDialog({ title: 'Please select folder for NGX Repository.',
-      defaultPath: app.getPath('userDesktop'), properties: [ 'openDirectory', 'createDirectory']});
-      if (Array.isArray(ngxSelection) && ngxSelection.length === 1) {
-        this.ngxPath = ngxSelection[0];
-        this.dataService.changeNgxPath(this.ngxPath);
-        execStep2 = true;
-      }
-    } else {
-      execStep2 = true;
-    }
-
-    if (execStep2) {
-      if (Object.keys(this.compareRules).length === 0) {
-        this.rulePath = dialog.showOpenDialog({ title: 'Please select folder with Rules File.',
-        defaultPath: app.getPath('userDesktop'), properties: [ 'openDirectory', 'createDirectory']})[0];
-            // Asynchronous read
-            const self = this;
-            fs.readFile(this.rulePath + '/config.json', function (err, data) {
-              if (err) {
-                self.showErrorMessage = 'Error in File Handling...' + err;
-                return console.error(err);
-              }
-              console.log(JSON.parse(data.toString()));
-              self.checkAndProceed(JSON.parse(data.toString()));
-            });
-
-      } else {
-        /*Existing rules in session.*/
-        this.rulePath = JSON.stringify(this.compareRules);
-        this.checkAndProceed(this.compareRules);
-      }
-    } else {
-      this.onNavigateBack();
-    }
+    this.dataService.currentNgPath.subscribe(ngPathCompareList => {
+      this.ngPath = ngPathCompareList;
+    });
+    this.dataService.currentBcPath.subscribe(bcPathCompareList => {
+      this.executablePath = bcPathCompareList;
+    });
+    this.dataService.currentModelScreen1.subscribe(currentModelScreen1CompareList => {
+      this.modelScreen1 = currentModelScreen1CompareList;
+    });
+    this.destinationFileNotExists = false;
+    this.noDestinationFound = false;
+    this.matchFound = false;
+    this.checkAndProceed();
   }
 
   onOpenCompare() {
     const parameters = [];
-    parameters.push(this.fileSource);
+    let fileSource = this.fileSource;
+    if (this.modelScreen1.searchType === 'G') {
+      fileSource = this.ngPath + '/' + this.fileSource;
+    }
+    parameters.push(fileSource);
     parameters.push(this.ngxPath + '/' + this.matchedRules);
-    child(executablePath, parameters, function(err, data) {
+    child(this.executablePath, parameters, function(err, data) {
       console.log(err);
       console.log(data.toString());
     });
   }
 
-  checkAndProceed(rules) {
-    this.compareRules = rules;
-    this.dataService.changeCompareRules(this.compareRules);
-    if (fs.existsSync(this.fileSource)) {
+  checkAndProceed() {
+    let fileToSearch = this.ngPath + '/' + this.modelScreen1.sourceGit;
+    if (this.modelScreen1.searchType === 'B') {
+      fileToSearch = this.modelScreen1.sourceBrowse;
+    }
+
+    if (fs.existsSync(fileToSearch)) {
       if (fs.existsSync(this.ngxPath)) {
         if (Object.keys(this.compareRules).length > 0 ) {
-            const n = this.fileSource.lastIndexOf('/NG/');
-            this.keyUsedFromSource = this.fileSource.substr(n + 1);
+          this.keyUsedFromSource = this.fileSource;
+          if (this.modelScreen1.searchType !== 'G') {
+            /*Yet to take from NGPath*/
+            const m = this.ngPath.lastIndexOf('/');
+            const repoName = this.ngPath.substr(m + 1);
+            const n = this.fileSource.lastIndexOf('/' + repoName + '/');
+            this.keyUsedFromSource = this.fileSource.substr(n + repoName.length + 2);
+          }
             this.matchedRules = this.compareRules[this.keyUsedFromSource];
-            console.log(this.fileSource.substr(n + 1));
+            if (this.matchedRules && !fs.existsSync(this.ngxPath + '/' + this.matchedRules)) {
+              this.destinationFileNotExists = true;
+            } else if (!this.matchedRules) {
+              this.noDestinationFound = true;
+            } else {
+              this.matchFound = true;
+            }
+
         } else {
           this.showErrorMessage = 'Rules are empty or not parsed correctly.';
         }
       } else {
-        this.showErrorMessage = 'NGX Path does not exists.';
+        this.showErrorMessage = 'NGX Path does not exists.<br>' + this.ngxPath;
       }
     } else {
-      this.showErrorMessage = 'Source file does not exists.';
+      this.showErrorMessage = 'Source file does not exists.<br>' + fileToSearch;
     }
   }
+
   onNavigateBack() {
     this.routerCompareList.navigate(['']);
   }
-
 }

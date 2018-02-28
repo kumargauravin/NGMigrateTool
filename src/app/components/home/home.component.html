@@ -1,6 +1,9 @@
 <div class="container">
+  <button class="btn btn-primary" (click) = "onLoadAppSettings()">Load App Settings</button>
   <h1 class="title">
     Migration Utility
   </h1>
-  <app-basic-search-form></app-basic-search-form>
+  <p class="alert alert-danger" *ngIf="showErrorMessage !== ''" [innerHTML]="showErrorMessage">
+  </p>
+  <app-basic-search-form *ngIf="settingsLoaded"></app-basic-search-form>
 </div>
