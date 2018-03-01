@@ -1,9 +1,20 @@
 <div class="container">
-  <button class="btn btn-primary" (click) = "onLoadAppSettings()">Load App Settings</button>
-  <h1 class="title">
-    Migration Utility
-  </h1>
+    <h1 class="title">
+        Migration Utility
+    </h1>
+  <div class="container">
+    <button *ngIf="showSettingsButton" class="btn btn-primary" (click) = "onLoadAppSettings()">Load Config File</button>
+    <span *ngIf="showSettingsButton" class="alert alert-danger">
+        The default app-config file is missing at {{appPath}}. Please click on Load Config File to proceed.
+    </span>
+    <button *ngIf="showRulesLoad" class="btn btn-primary" (click) = "onloadCustomRulesFile()">Load Rules File</button>
+    <span *ngIf="showRulesLoad" class="alert alert-danger">
+        The default rule-config file is missing at {{appPath}}. Please click on Load Rule File to proceed.
+    </span>
+
   <p class="alert alert-danger" *ngIf="showErrorMessage !== ''" [innerHTML]="showErrorMessage">
   </p>
+  </div>
   <app-basic-search-form *ngIf="settingsLoaded"></app-basic-search-form>
+  <!--app-list-view></app-list-view-->
 </div>

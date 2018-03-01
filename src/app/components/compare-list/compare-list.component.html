@@ -1,8 +1,9 @@
 <div class="container">
-    <button class="btn btn-primary" (click) = "onNavigateBack()">Back</button>
     <h1 class="title">
-      Migration Utility - Compare Results
+        Migration Utility - Compare Results
     </h1>
+
+    <button class="btn btn-primary" (click) = "onNavigateBack()">Back</button>
     <div class="row">
      <div class="col-md-12">
         <div *ngIf="showErrorMessage === ''" class="table-responsive">
@@ -16,7 +17,7 @@
                 <tbody>
                     <tr>
                       <th scope="row">File name + path:</th>
-                      <td>{{ngPath + '/' + fileSource}}</td>
+                      <td>{{((modelScreen1.searchType === 'G')?ngPath + '/': '') + fileSource}}</td>
                     </tr>
                     <tr>
                       <th scope="row">Path for folder NGX:</th>

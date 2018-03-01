@@ -1,0 +1,99 @@
+.annotate{
+	font-style: italic;
+	color: #366ED4;
+}
+
+.listbox-area {
+	padding: 10px;
+	background: #eee;
+	border: 1px solid #aaa;
+  font-size: 0px;
+  width: 820px;
+}
+
+.left-area, .right-area {
+	box-sizing: border-box;
+	display: inline-block;
+	font-size: 14px;
+	vertical-align: top;
+	width: 100%;
+}
+
+.left-area {
+	padding-right: 10px;
+}
+
+.right-area {
+	padding-left: 10px;
+}
+
+[role="listbox"] {
+	min-height: 18em;
+	padding: 0px;
+	background: white;
+	border: 1px solid #aaa;
+}
+
+[role="option"] {
+	display: block;
+	padding: 0 1em;
+	position: relative;
+	line-height: 1.8em;
+}
+
+[role="option"].focused {
+	background: #bde4ff;
+}
+
+[role="option"][aria-selected] {
+	padding-left: 1.5em;
+}
+
+[role="option"][aria-selected="true"]::before {
+	content: 'âœ“';
+	position: absolute;
+	left: 0.5em;
+}
+
+#exp_elem_list {
+	border-top: 0;
+	max-height: 10em;
+	overflow-y: auto;
+	position: absolute;
+	margin: 0;
+	width: 100%;
+}
+
+#ss_elem_list {
+	max-height: 18em;
+	overflow-y: auto;
+	position: relative;
+}
+
+.hidden {
+	display: none;
+}
+
+.toolbar {
+	font-size: 0;
+}
+
+.toolbar-item {
+	border: 1px solid #aaa;
+	background: #ccc;
+}
+
+.toolbar-item[aria-disabled="false"]:focus {
+	background-color: #eee;
+}
+
+.offscreen {
+	clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+	font-size: 14px;
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}

@@ -7,6 +7,7 @@ export class DataService {
 
   private fileSource = new BehaviorSubject<string>('');
   private compareRules = new BehaviorSubject<object>({});
+  private appConfig = new BehaviorSubject<object>({});
   private ngxPath = new BehaviorSubject<string>('');
   private modelScreen1 = new BehaviorSubject<BasicSearch>(new BasicSearch('', '', 'G', null, ''));
   private bcPath = new BehaviorSubject<string>('');
@@ -19,6 +20,8 @@ export class DataService {
   currentBcPath = this.bcPath.asObservable();
   currentNgPath = this.ngPath.asObservable();
   currentConfigPath = this.configPath.asObservable();
+  currentAppConfig = this.appConfig.asObservable();
+
   constructor() {
 
   }
@@ -35,6 +38,10 @@ export class DataService {
 
   changeCompareRules (ruleSet: object) {
     this.compareRules.next(ruleSet);
+  }
+
+  changeAppConfig (appSet: object) {
+    this.appConfig.next(appSet);
   }
 
   changeNgxPath (ngxSource: string) {

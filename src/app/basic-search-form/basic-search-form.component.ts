@@ -13,6 +13,7 @@ export class BasicSearchFormComponent implements OnInit {
   model = new BasicSearch('', '', 'G', null, '');
   submitted = false;
   ngPath = '';
+  showErrorMessage = '';
   onSubmit() {
     this.submitted = true;
     console.log(this.diagnostic);
@@ -26,13 +27,16 @@ export class BasicSearchFormComponent implements OnInit {
     if (this.model.searchType === 'B') {
       fileToSearch = this.model.sourceBrowse;
     }
-
+    console.log(fileToSearch);
     fs.stat(fileToSearch, function (err, stats) {
       if (stats && stats.isFile()) {
+        self.showErrorMessage = '';
         self.dataService.changeModelScreen1(self.model);
         self.dataService.changeFileSource(fileName);
+        self.dataService.changeConfigPath('Available');
         self.routerhome.navigate(['compareList']);
       } else {
+        self.showErrorMessage = err.message ? err.message.replace(',', '<br>') : 'File error occured. Try Again.';
         self.model.sourceName = '';
         self.model.sourceBrowse = '';
       }

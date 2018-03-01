@@ -2,6 +2,7 @@ import { HomeComponent } from './components/home/home.component';
 import { CompareListComponent } from './components/compare-list/compare-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ListViewComponent } from './list-view/list-view.component';
 
 const routes: Routes = [
     {
@@ -11,6 +12,10 @@ const routes: Routes = [
     {
         path: 'compareList',
         component: CompareListComponent
+    },
+    {
+        path: 'listView',
+        component: ListViewComponent
     }
 ];
 

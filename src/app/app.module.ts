@@ -23,6 +23,7 @@ import { BasicSearchFormComponent } from './basic-search-form/basic-search-form.
 import { FileValueAccessor } from './file-control-value-accessor';
 import { FileValidator } from './file-input.validator';
 import { CompareListComponent } from './components/compare-list/compare-list.component';
+import { ListViewComponent } from './list-view/list-view.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -36,7 +37,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     BasicSearchFormComponent,
     FileValueAccessor,
     FileValidator,
-    CompareListComponent
+    CompareListComponent,
+    ListViewComponent
   ],
   imports: [
     BrowserModule,

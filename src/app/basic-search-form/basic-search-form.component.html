@@ -9,7 +9,7 @@
             <input type="text" class="form-control input-lg"
               placeholder="File relative path..."
               id="sourceGit" name="sourceGit"
-              [(ngModel)]="model.sourceGit" required #sourceGit="ngModel"/>
+              [(ngModel)]="model.sourceGit" required (focus)="showErrorMessage = ''" #sourceGit="ngModel"/>
             <div [hidden]="sourceGit.valid || sourceGit.pristine" class="alert alert-danger">
                 Please provide a valid path and name. This field is required.
             </div>
@@ -23,6 +23,8 @@
         </div>
       </div>
     </div>
+    <p class="alert alert-danger" *ngIf="showErrorMessage !== ''" [innerHTML]="showErrorMessage">
+    </p>
     <button type="submit" class="btn btn-success" [disabled]="!basicSearch.form.valid">Get Comparables</button>
   </form>
 </div>
