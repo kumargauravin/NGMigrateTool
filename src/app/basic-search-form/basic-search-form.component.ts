@@ -64,4 +64,7 @@ export class BasicSearchFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  onListView() {
+    this.routerhome.navigate(['listView']);
+  }
 }

@@ -25,6 +25,8 @@
     </div>
     <p class="alert alert-danger" *ngIf="showErrorMessage !== ''" [innerHTML]="showErrorMessage">
     </p>
-    <button type="submit" class="btn btn-success" [disabled]="!basicSearch.form.valid">Get Comparables</button>
+      <button type="submit" class="btn btn-success" [disabled]="!basicSearch.form.valid">Get Comparables</button>
+      &nbsp;OR&nbsp;
+      <button type="button" class="btn btn-success" (click)="onListView()">List View</button>
   </form>
 </div>

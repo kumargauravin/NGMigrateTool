@@ -24,6 +24,7 @@ import { FileValueAccessor } from './file-control-value-accessor';
 import { FileValidator } from './file-input.validator';
 import { CompareListComponent } from './components/compare-list/compare-list.component';
 import { ListViewComponent } from './list-view/list-view.component';
+import { LimitedPathPipe } from './limited-path.pipe';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,7 +39,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FileValueAccessor,
     FileValidator,
     CompareListComponent,
-    ListViewComponent
+    ListViewComponent,
+    LimitedPathPipe
   ],
   imports: [
     BrowserModule,
